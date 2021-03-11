@@ -1,0 +1,14 @@
+---
+- hosts: server-staging
+  become: true
+  tasks:
+#   - name: Upload war to Tomcat via manager service 
+#     raw: curl --upload-file /tmp/hello.war "http://admin:must-be-changed@server-staging:8081/manager/deploy?path=/hello"
+    - name: Break temporarily the default protection to the webapps folder
+      raw: sudo chmod o+rwx /opt/tomcat/webapps
+
+    - name: Copy WAR to webapps
+      copy: src=target/greetings-0.1-SNAPSHOT.war dest=/opt/tomcat/webapps/hello.war owner=tomcat group=tomcat mode=0744
+
+    - name: Re-establish the default protection to write to webapps folder
+      raw: sudo chmod o-rwx /opt/tomcat/webapps
