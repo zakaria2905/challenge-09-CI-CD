@@ -5,3 +5,5 @@
 - src: gantsign.maven
 
 - src: idealista.tomcat-role
+
+- src: geerlingguy.docker

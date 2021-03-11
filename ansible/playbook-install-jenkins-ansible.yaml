@@ -16,14 +16,15 @@
     apt: update_cache=yes
   
   roles:
-    - geerlingguy.git
-    - geerlingguy.java
-    - role: gantsign.maven
-      maven_download_timeout: 300
+     - geerlingguy.git
+     - geerlingguy.java
+     - role: gantsign.maven
+       maven_download_timeout: 300
 
-    - geerlingguy.jenkins
+     - geerlingguy.jenkins
+     - geerlingguy.docker
   
-- name: Install Java 8 and Tomcat on both server-staging and server-production 
+- name: Install Java 8 on both server-staging and server-production 
   hosts: workers
   become: true
   gather_facts: yes
@@ -37,4 +38,3 @@
     - role: idealista.tomcat-role
       tomcat_user: vagrant
       tomcat_group: vagrant
-      
