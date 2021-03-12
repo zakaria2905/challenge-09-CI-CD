@@ -28,7 +28,17 @@ pipeline {
                 echo "====++++  Build and Unit Test (Maven/JUnit) ++++===="
                 sh "mvn clean package"
             }           
-        }        
+        }
+
+        // Static Code Analysis (SonarQube)        
+        stage("Static Code Analysis (SonarQube)"){
+            steps{
+                echo "====++++  Static Code Analysis (SonarQube) ++++===="
+                //withSonarQubeEnv('my_sonarqube_in_docker') {  
+                sh "mvn clean package -Dsurefire.skip=true sonar:sonar -Dsonar.host.url=http://localhost:9000   -Dsonar.projectName=challenge-09-jenkins-ansible-playbook -Dsonar.projectKey=challenge-09-jenkins-ansible-playbook -Dsonar.projectVersion=$BUILD_NUMBER";
+               }  
+            }           
+
          // Deploiement du WAR sur le server-staging avec Ansible
         stage("Deploy WAR on staging using Ansible"){
             steps{

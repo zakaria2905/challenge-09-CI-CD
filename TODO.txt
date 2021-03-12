@@ -1,0 +1,26 @@
+1- Vagranfile:
+   Aggrandir la ram du server-jenkins
+   Modifier les droits sur  .vagrant  (750 pour que les users du groupe puissent ls lire)
+   
+   Dans le script d'installation de Ansible, installer aussi
+   docker-py (Pour mettre de démarrer des conteneur docker avec le 
+              module docker_container)
+   
+
+2- PlayBook de provisionnement du serveur Jenkins
+   
+   Dans les post-tasks des rôles
+   
+   - Provisionner le démarrage du conteneur sonarqube:lts
+   
+	   post_tasks:
+	  - name: Start Sonarqube Container
+		docker_container:
+		  name: my-sonarqube
+		  image: sonarqube:lts
+		  ports:
+			- "9000:9000"
+   
+   - Ajouter le user jenkins dans les sudoers
+   - Ajouter le user jenkis au groupe vagrant (pour pouvoir accéder aux clés SSH qui sont dans .vagrant) 
+   
